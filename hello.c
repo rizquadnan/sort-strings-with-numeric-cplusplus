@@ -1,67 +1,46 @@
 #include <iostream>
 #include <vector>
 
-int partition(std::vector<int> &arr, int low, int high)
+void selectionSort(std::vector<int> &arr)
 {
-  // Choose the median-of-three as the pivot
-  int mid = low + (high - low) / 2;
-  int pivot = arr[mid];
+  int n = arr.size();
 
-  // Rearrange elements so that pivot is in its correct position
-  int i = low;
-  int j = high;
-  while (true)
+  for (int i = 0; i < n - 1; i++)
   {
-    while (arr[i] < pivot)
-    {
-      i++;
-    }
-    while (arr[j] > pivot)
-    {
-      j--;
-    }
-    if (i >= j)
-    {
-      break;
-    }
-    std::swap(arr[i], arr[j]);
-    i++;
-    j--;
-  }
-  return j;
-}
+    int minIndex = i;
 
-void quickSort(std::vector<int> &arr, int low, int high)
-{
-  if (low < high)
-  {
-    // Partition the vector into two sub-vectors and get the pivot index
-    int pivotIndex = partition(arr, low, high);
+    for (int j = i + 1; j < n; j++)
+    {
+      if (arr[j] < arr[minIndex])
+      {
+        minIndex = j;
+      }
+    }
 
-    // Recursively sort the sub-vectors
-    quickSort(arr, low, pivotIndex);
-    quickSort(arr, pivotIndex + 1, high);
+    if (minIndex != i)
+    {
+      std::swap(arr[i], arr[minIndex]);
+    }
   }
 }
 
 int main()
 {
   std::vector<int> arr = {12, 11, 13, 5, 6, 7};
-  int n = arr.size();
 
-  std::cout << "Original array: ";
+  std::cout << "Original array:";
   for (int num : arr)
   {
-    std::cout << num << " ";
+    std::cout << " " << num;
   }
   std::cout << std::endl;
 
-  quickSort(arr, 0, n - 1);
+  selectionSort(arr);
 
-  std::cout << "Sorted array: ";
+  std::cout << "Sorted array:";
   for (int num : arr)
   {
-    std::cout << num << " ";
+    std::cout << " " << num;
   }
   std::cout << std::endl;
 
